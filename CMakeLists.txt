@@ -73,8 +73,10 @@ find_package(BipedalLocomotionFramework 0.3.100 REQUIRED
 
 #Function to automatize the process of creating a new library
 include(AddCentroidalMPCWalkingApplication)
+include(InstallIniFiles)
 
 add_subdirectory(src)
+add_subdirectory(worlds)
 
 # include(InstallBasicPackageFiles)
 # set(PROJECT_PRIVATE_DEPENDENCIES )
