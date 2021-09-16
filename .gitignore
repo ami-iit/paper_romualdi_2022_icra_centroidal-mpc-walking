@@ -1,0 +1,13 @@
+# build folder
+build/*
+
+# emacs
+*~
+\#*\#
+
+# Qtcreator
+*.user*
+*.autosave
+
+# python
+__pycache__/
