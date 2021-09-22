@@ -1,0 +1,136 @@
+diff --git a/iCub/conf/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini b/iCub/conf/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini
+index ebc0ba3..1ec29cc 100644
+--- a/iCub/conf/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini
++++ b/iCub/conf/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini
+@@ -38,7 +38,7 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0  100.0
+ [POSITION_CONTROL]
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+-kp            1.745 1.745 1.745 1.745 1.745 1.745 1.745
++kp            3.45  3.45  1.745 1.745 1.745 1.745 1.745
+ kd            0.174 0.174 0.174 0.174 0.174 0.174 0.0
+ ki            0.174 0.174 0.174 0.174 0.174 0.174 0.0
+ maxInt        9999  9999  9999  9999  9999  9999  9999
+diff --git a/iCub/conf/gazebo_icub_left_leg.ini b/iCub/conf/gazebo_icub_left_leg.ini
+index 1cc9589..8439624 100644
+--- a/iCub/conf/gazebo_icub_left_leg.ini
++++ b/iCub/conf/gazebo_icub_left_leg.ini
+@@ -37,8 +37,8 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0
+ [POSITION_CONTROL]
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+-kp            17.453 17.453 17.453 17.453 17.453 17.453
+-kd            0.174  0.174  0.174  0.174  0.174  0.174
++kp            50.453 50.453 50.453 50.453 34.453 34.453
++kd            0.174  0.174  0.174  0.174  0.12   0.12
+ ki            0.174  0.174  0.174  0.174  0.174  0.174
+ maxInt        9999   9999   9999   9999   9999   9999
+ maxOutput     9999   9999   9999   9999   9999   9999
+diff --git a/iCub/conf/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini b/iCub/conf/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini
+index cb47968..7b2f16f 100644
+--- a/iCub/conf/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini
++++ b/iCub/conf/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini
+@@ -38,7 +38,7 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0  100.0
+ [POSITION_CONTROL]
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+-kp            1.745 1.745 1.745 1.745 1.745 1.745 1.745
++kp            3.45  3.45  1.745 1.745 1.745 1.745 1.745
+ kd            0.174 0.174 0.174 0.174 0.174 0.174 0.0
+ ki            0.174 0.174 0.174 0.174 0.174 0.174 0.0
+ maxInt        9999  9999  9999  9999  9999  9999  9999
+diff --git a/iCub/conf/gazebo_icub_right_leg.ini b/iCub/conf/gazebo_icub_right_leg.ini
+index 7750812..09ea822 100644
+--- a/iCub/conf/gazebo_icub_right_leg.ini
++++ b/iCub/conf/gazebo_icub_right_leg.ini
+@@ -37,8 +37,8 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0
+ [POSITION_CONTROL]
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+-kp            17.453 17.453 17.453 17.453 17.453 17.453
+-kd            0.174  0.174  0.174  0.174  0.174  0.174
++kp            50.453 50.453 50.453 50.453 34.453 34.453
++kd            0.174  0.174  0.174  0.174  0.12   0.12
+ ki            0.174  0.174  0.174  0.174  0.174  0.174
+ maxInt        9999   9999   9999   9999   9999   9999
+ maxOutput     9999   9999   9999   9999   9999   9999
+diff --git a/iCub/conf/gazebo_icub_torso.ini b/iCub/conf/gazebo_icub_torso.ini
+index d1fc50f..6201c13 100644
+--- a/iCub/conf/gazebo_icub_torso.ini
++++ b/iCub/conf/gazebo_icub_torso.ini
+@@ -37,8 +37,8 @@ max_damping   100.0  100.0  100.0
+ [POSITION_CONTROL]
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+-kp            1.745 1.745 1.745
+-kd            0.174 0.174 0.174
++kp            1.745 2.745 2.745
++kd            0.174 0.12  0.12
+ ki            0.174 0.174 0.174
+ maxInt        9999  9999  9999
+ maxOutput     9999  9999  9999
+diff --git a/iCub/conf_icub3/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini b/iCub/conf_icub3/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini
+index 4e049cd..c581da1 100644
+--- a/iCub/conf_icub3/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini
++++ b/iCub/conf_icub3/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini
+@@ -38,7 +38,7 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0  100.0
+ [POSITION_CONTROL]
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+-kp            5.745 5.745 5.745 1.745 1.745 1.745 1.745
++kp            50 50 50 50 50 50 50
+ kd            0.174 0.174 0.174 0.174 0.174 0.174 0.0
+ ki            0.174 0.174 0.174 0.174 0.174 0.174 0.0
+ maxInt        9999  9999  9999  9999  9999  9999  9999
+diff --git a/iCub/conf_icub3/gazebo_icub_left_leg.ini b/iCub/conf_icub3/gazebo_icub_left_leg.ini
+index 0a149e9..b86c4df 100644
+--- a/iCub/conf_icub3/gazebo_icub_left_leg.ini
++++ b/iCub/conf_icub3/gazebo_icub_left_leg.ini
+@@ -37,7 +37,7 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0
+ [POSITION_CONTROL]
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+-kp            40.0   40.0   40.0   40.0   40.0   40.0
++kp            200.0   225.0   225.0   225.0   225.0   225.0
+ kd            0.35   0.35   0.35   0.35   0.35   0.35
+ ki            0.35   0.35   0.35   0.35   0.35   0.35
+ maxInt        9999   9999   9999   9999   9999   9999
+diff --git a/iCub/conf_icub3/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini b/iCub/conf_icub3/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini
+index 37187a5..76faefc 100644
+--- a/iCub/conf_icub3/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini
++++ b/iCub/conf_icub3/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini
+@@ -38,7 +38,7 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0  100.0
+ [POSITION_CONTROL]
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+-kp            5.745 5.745 5.745 1.745 1.745 1.745 1.745
++kp            50 50 50 50 50 50 50
+ kd            0.174 0.174 0.174 0.174 0.174 0.174 0.0
+ ki            0.174 0.174 0.174 0.174 0.174 0.174 0.0
+ maxInt        9999  9999  9999  9999  9999  9999  9999
+diff --git a/iCub/conf_icub3/gazebo_icub_right_leg.ini b/iCub/conf_icub3/gazebo_icub_right_leg.ini
+index be92625..1b23992 100644
+--- a/iCub/conf_icub3/gazebo_icub_right_leg.ini
++++ b/iCub/conf_icub3/gazebo_icub_right_leg.ini
+@@ -37,7 +37,7 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0
+ [POSITION_CONTROL]
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+-kp            40.0   40.0   40.0   40.0   40.0   40.0
++kp            200.0   225.0   225.0   225.0   225.0   225.0
+ kd            0.35   0.35   0.35   0.35   0.35   0.35
+ ki            0.35   0.35   0.35   0.35   0.35   0.35
+ maxInt        9999   9999   9999   9999   9999   9999
+diff --git a/iCub/conf_icub3/gazebo_icub_torso.ini b/iCub/conf_icub3/gazebo_icub_torso.ini
+index cab5cf3..fdbce81 100644
+--- a/iCub/conf_icub3/gazebo_icub_torso.ini
++++ b/iCub/conf_icub3/gazebo_icub_torso.ini
+@@ -37,7 +37,7 @@ max_damping   100.0  100.0  100.0
+ [POSITION_CONTROL]
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+-kp            40.0  40.0  40.0
++kp            30.0  30.0  30.0
+ kd            0.35  0.35  0.35
+ ki            0.35  0.35  0.35
+ maxInt        9999  9999  9999
