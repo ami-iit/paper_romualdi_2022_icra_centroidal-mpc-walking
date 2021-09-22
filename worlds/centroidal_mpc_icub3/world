@@ -2,6 +2,12 @@
 <sdf version="1.4">
   <world name="default">
 
+    <physics type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>0.1</real_time_factor>
+      <real_time_update_rate>100</real_time_update_rate>
+    </physics>
+
     <!-- Light -->
     <include>
       <uri>model://sun</uri>
@@ -35,7 +41,7 @@
       </plugin>
       <include>
         <uri>model://iCubGazeboV3</uri>
-        <pose>0.0 0.0 0.6 0.0 -0.15 0.0</pose>
+        <pose>0.0 0.0 0.58 0.0 -0.27 0.0</pose>
       </include>
     </model>
   </world>
