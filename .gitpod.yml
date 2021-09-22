@@ -1,0 +1,2 @@
+image: ghcr.io/ami-iit/centroidal-mpc-walking-docker:latest
+workspaceLocation: "."
