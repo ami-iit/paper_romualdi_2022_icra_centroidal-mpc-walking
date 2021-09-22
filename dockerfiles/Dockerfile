@@ -24,8 +24,8 @@ RUN apt install -y -qq build-essential ca-certificates cmake cmake-curses-gui cu
    rm -rf /var/lib/apt/lists/*
 
 
-COPY environment.yml .
-RUN conda env update --file environment.yml
+COPY conda-environment.yml .
+RUN mamba env update --file conda-environment.yml
 
 # install bipedal locomotion framework
 RUN git clone https://github.com/ami-iit/bipedal-locomotion-framework.git && \
@@ -33,7 +33,11 @@ RUN git clone https://github.com/ami-iit/bipedal-locomotion-framework.git && \
     git checkout 6cfe29fcfdd5c598bb0baa809b91c96139e4bcf1 && \
     mkdir build && \
     cd build && \
-    cmake -GNinja -DCMAKE_INSTALL_PREFIX=/opt/conda .. && \
+    cmake -GNinja -DCMAKE_INSTALL_PREFIX=/opt/conda \
+                  -DFRAMEWORK_COMPILE_JointPositionTrackingApplication=OFF \
+                  -DFRAMEWORK_COMPILE_JointTrajectoryPlayer=OFF \
+                  -DFRAMEWORK_COMPILE_MasImuTest=OFF \
+                  -DFRAMEWORK_COMPILE_RealSenseTestApplication=OFF .. && \
     cmake --build . --target install
 
 
