@@ -1,7 +1,7 @@
 FROM condaforge/mambaforge:4.9.2-5 as conda
 LABEL org.opencontainers.image.title="CentroidalMPC Docker Image"
 LABEL org.opencontainers.image.description="Infrastructure for reproducing CentroidalMPC experiments"
-LABEL org.opencontainers.image.source="https://raw.githubusercontent.com/ami-iit/centroidal-mpc/master/dockerfiles/Dockerfile"
+LABEL org.opencontainers.image.source="https://raw.githubusercontent.com/ami-iit/centroidal-mpc-walking/main/dockerfiles/Dockerfile"
 LABEL org.opencontainers.image.authors="Giulio Romualdi <giulio.romualdi@iit.it>"
 
 
