@@ -14,6 +14,7 @@
 #include <BipedalLocomotion/TextLogging/Logger.h>
 
 #include <CentroidalMPCWalking/CentroidalMPCBlock.h>
+#include <CentroidalMPCWalking/Utilities.h>
 
 using namespace CentroidalMPCWalking;
 using namespace BipedalLocomotion::ParametersHandler;
@@ -65,7 +66,7 @@ bool CentroidalMPCBlock::setInput(const Input& input)
             // left foot
             // first footstep
 
-            constexpr double scaling = 1.5;
+            constexpr double scaling = 1;
             constexpr double scalingPos = 1.5;
             constexpr double scalingPosY = 0;
             // // t  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19
@@ -218,11 +219,10 @@ bool CentroidalMPCBlock::setInput(const Input& input)
             m_comTraj.rightCols(m_comTraj.cols() - tempInt).colwise() = m_comTraj.col(tempInt - 1);
         }
 
-        const double totalMass = 52.0102;
         return m_controller.setState(input.com,
                                      input.dcom,
                                      input.angularMomentum,
-                                     input.totalExternalWrench.force() / totalMass);
+                                     input.totalExternalWrench.force());
     }
     return true;
 }
@@ -281,6 +281,10 @@ bool CentroidalMPCBlock::advance()
             = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
         m_output.nextPlannedContact = m_controller.getOutput().nextPlannedContact;
         m_output.contacts = m_controller.getOutput().contacts;
+        m_output.externalWrench = m_controller.getOutput().externalWrench;
+
+        m_currentTime += 0.1;
+        m_currentTime = roundoff(m_currentTime, 2);
 
         return true;
     }

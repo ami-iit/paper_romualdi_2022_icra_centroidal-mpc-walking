@@ -17,6 +17,7 @@
 #include <BipedalLocomotion/System/YarpClock.h>
 #include <BipedalLocomotion/TextLogging/Logger.h>
 
+#include <cstdlib>
 #include <memory>
 
 #include <yarp/os/Network.h>
@@ -37,11 +38,17 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    std::string temp;
-    BipedalLocomotion::log()->warn("[main] Please remember to check the mass of the robot. It is "
-                                   "hardcoded in the blocks");
-    std::cin >> temp;
+    std::string outcome;
+    while (true)
+    {
+        BipedalLocomotion::log()->info("[main] Do you want to start the experiment [y|n]?");
+        std::cin >> outcome;
 
+        if (outcome == "y")
+            break;
+        if (outcome == "n")
+            return EXIT_SUCCESS;
+    }
     // prepare and configure the resource finder
     yarp::os::ResourceFinder& rf = yarp::os::ResourceFinder::getResourceFinderSingleton();
 

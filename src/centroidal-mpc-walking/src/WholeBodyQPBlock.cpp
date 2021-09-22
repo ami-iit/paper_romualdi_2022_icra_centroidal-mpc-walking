@@ -35,6 +35,7 @@
 #include <BipedalLocomotion/System/VariablesHandler.h>
 #include <BipedalLocomotion/TextLogging/Logger.h>
 
+#include <CentroidalMPCWalking/Utilities.h>
 #include <CentroidalMPCWalking/WholeBodyQPBlock.h>
 
 using namespace CentroidalMPCWalking;
@@ -576,7 +577,7 @@ bool WholeBodyQPBlock::initialize(std::weak_ptr<const IParametersHandler> handle
     m_sensorBridge.getJointPositions(m_currentJointPos);
     m_sensorBridge.getJointPositions(m_desJointPos);
 
-    constexpr double scaling = 1.5;
+    constexpr double scaling = 1.0;
     constexpr double scalingPos = 1.5;
     constexpr double scalingPosY = 0;
     // // t  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19 20  21
@@ -899,7 +900,24 @@ Eigen::Vector2d WholeBodyQPBlock::computeDesiredZMP(
             localZMP(2) = 0.0;
 
             // the wrench is already expressed in mixed we have just to translate it
-            zmp += totalWrench.force()(2) * contact.pose.act(localZMP).head<2>();
+            // if left
+            if (key == "left_foot")
+            {
+                manif::SE3d temptransofrm = BipedalLocomotion::Conversions::toManifPose(
+                    m_kinDynWithDesired.kindyn->getWorldTransform("l_sole"));
+                zmp += totalWrench.force()(2) * temptransofrm.act(localZMP).head<2>();
+            }
+            // if left
+            else if (key == "right_foot")
+            {
+                manif::SE3d temptransofrm = BipedalLocomotion::Conversions::toManifPose(
+                    m_kinDynWithDesired.kindyn->getWorldTransform("r_sole"));
+                zmp += totalWrench.force()(2) * temptransofrm.act(localZMP).head<2>();
+            }
+            else
+            {
+                BipedalLocomotion::log()->error("Problem in evaluated the desired zmp");
+            }
         }
     }
 
@@ -997,10 +1015,10 @@ bool WholeBodyQPBlock::advance()
         totalExternalWrench.setZero();
     } else
     {
-        BipedalLocomotion::log()->info("external push detected {} norm {}",
-                                       totalExternalWrench.force().transpose(),
-                                       totalExternalWrench.force().norm());
         totalExternalWrench.force()(2) = 0;
+
+        const double totalMass = 52.0102;
+        totalExternalWrench = totalExternalWrench / totalMass;
     }
 
     if (m_input.contacts.size() != 0)
@@ -1016,10 +1034,7 @@ bool WholeBodyQPBlock::advance()
 
         if (force.norm() > 0.01)
         {
-            const double totalMass = 52.0102;
-            Eigen::Vector3d scaledForce = totalExternalWrench.force() / totalMass;
-
-            m_centroidalSystem.dynamics->setControlInput({m_input.contacts, scaledForce});
+            m_centroidalSystem.dynamics->setControlInput({m_input.contacts, m_input.externalWrench});
             m_centroidalSystem.integrator->integrate(0, m_dT);
             desiredZMP = this->computeDesiredZMP(m_input.contacts);
             updateContactPhaseList(m_input.nextPlannedContact, m_contactListMap);
@@ -1027,7 +1042,7 @@ bool WholeBodyQPBlock::advance()
             shouldAdvance = true;
 
             auto newPhaseIt = m_contactPhaselist.getPresentPhase(m_absoluteTime);
-            if (newPhaseIt != m_phaseIt)
+            if(newPhaseIt != m_phaseIt)
             {
                 // check if new contact is established
                 if (m_phaseIt->activeContacts.size() == 1 && newPhaseIt->activeContacts.size() == 2)
@@ -1321,8 +1336,10 @@ bool WholeBodyQPBlock::advance()
             m_rightFootAdjuster.advance();
         }
 
+
         m_absoluteTime += m_dT;
-        if (m_absoluteTime > 40)
+        m_absoluteTime = roundoff(m_absoluteTime, 3);
+        if (m_absoluteTime > 40 /1.5)
         {
             BipedalLocomotion::log()->info("{} Experiment ended", errorPrefix);
             return false;
@@ -1361,55 +1378,49 @@ bool WholeBodyQPBlock::advance()
 
     m_output.isValid = true;
 
-    if (shouldAdvance)
+    if(shouldAdvance)
     {
-        Eigen::IOFormat
-            CommaInitFmt(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", ", ", "", "", "", "");
-        m_myfile << m_desJointPos.format(CommaInitFmt) << ", "
-               << m_currentJointPos.format(CommaInitFmt) << ", "
-               << m_baseTransform.translation().format(CommaInitFmt) << ", "
-               << iDynTree::toEigen(m_kinDynWithMeasured.kindyn->getCenterOfMassPosition())
-                      .format(CommaInitFmt)
-               << ", " << std::get<0>(m_centroidalSystem.dynamics->getState()).format(CommaInitFmt)
-               << ", " << m_leftFootPlanner.getOutput().transform.translation().format(CommaInitFmt)
-               << ", "
-               << iDynTree::toEigen(
-                      m_kinDynWithMeasured.kindyn->getWorldTransform("l_sole").getPosition())
-                      .format(CommaInitFmt)
-               << ", "
-               << iDynTree::toEigen(
-                      m_kinDynWithDesired.kindyn->getWorldTransform("l_sole").getPosition())
-                      .format(CommaInitFmt)
-               << "," << m_rightFootPlanner.getOutput().transform.translation().format(CommaInitFmt)
-               << ", "
-               << iDynTree::toEigen(
-                      m_kinDynWithMeasured.kindyn->getWorldTransform("r_sole").getPosition())
-                      .format(CommaInitFmt)
-               << ", "
-               << iDynTree::toEigen(
-                      m_kinDynWithDesired.kindyn->getWorldTransform("r_sole").getPosition())
-                      .format(CommaInitFmt)
-               << ", " << desiredZMP.format(CommaInitFmt) << ", "
-               << measuredZMP.format(CommaInitFmt) << ", "
-               << iDynTree::toEigen(m_kinDynWithMeasured.kindyn->getCenterOfMassVelocity())
-                      .format(CommaInitFmt)
-               << ", " << std::get<1>(m_centroidalSystem.dynamics->getState()).format(CommaInitFmt)
-               << ", " << m_desJointVel.format(CommaInitFmt) << ", "
-               << m_currentJointVel.format(CommaInitFmt) << ", "
-               << transform.translation().format(CommaInitFmt) << ", "
-               << transformLeft.translation().format(CommaInitFmt) << ", "
-               << totalExternalWrench.transpose().format(CommaInitFmt) << ", "
-               << m_input.computationalTime << ", "
-               << m_output.angularMomentum.format(CommaInitFmt);
+    Eigen::IOFormat
+        CommaInitFmt(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", ", ", "", "", "", "");
+    m_myfile
+        << m_desJointPos.format(CommaInitFmt) << ", " << m_currentJointPos.format(CommaInitFmt)
+        << ", " << m_baseTransform.translation().format(CommaInitFmt) << ", "
+        << iDynTree::toEigen(m_kinDynWithMeasured.kindyn->getCenterOfMassPosition())
+               .format(CommaInitFmt)
+        << ", " << std::get<0>(m_centroidalSystem.dynamics->getState()).format(CommaInitFmt) << ", "
+        << m_leftFootPlanner.getOutput().transform.translation().format(CommaInitFmt) << ", "
+        << iDynTree::toEigen(m_kinDynWithMeasured.kindyn->getWorldTransform("l_sole").getPosition())
+               .format(CommaInitFmt)
+        << ", "
+        << iDynTree::toEigen(m_kinDynWithDesired.kindyn->getWorldTransform("l_sole").getPosition())
+               .format(CommaInitFmt)
+        << "," << m_rightFootPlanner.getOutput().transform.translation().format(CommaInitFmt)
+        << ", "
+        << iDynTree::toEigen(m_kinDynWithMeasured.kindyn->getWorldTransform("r_sole").getPosition())
+               .format(CommaInitFmt)
+        << ", "
+        << iDynTree::toEigen(m_kinDynWithDesired.kindyn->getWorldTransform("r_sole").getPosition())
+               .format(CommaInitFmt)
+        << ", " << desiredZMP.format(CommaInitFmt) << ", " << measuredZMP.format(CommaInitFmt)
+        << ", "
+        << iDynTree::toEigen(m_kinDynWithMeasured.kindyn->getCenterOfMassVelocity())
+               .format(CommaInitFmt)
+        << ", " << std::get<1>(m_centroidalSystem.dynamics->getState()).format(CommaInitFmt) << ", "
+        << m_desJointVel.format(CommaInitFmt) << ", " << m_currentJointVel.format(CommaInitFmt)
+        << ", " << transform.translation().format(CommaInitFmt) << ", "
+        << transformLeft.translation().format(CommaInitFmt) << ", "
+        << totalExternalWrench.transpose().format(CommaInitFmt) << ", " << m_input.computationalTime
+        << ", " << m_output.angularMomentum.format(CommaInitFmt);
 
-        for (const auto& [key, contact] : m_input.contacts)
+    for (const auto& [key, contact] : m_input.contacts)
+    {
+        for (const auto& corner : contact.corners)
         {
-            for (const auto& corner : contact.corners)
-            {
-                m_myfile << ", " << corner.force.transpose().format(CommaInitFmt);
-            }
+          m_myfile << ", " << corner.force.transpose().format(CommaInitFmt);
         }
-        m_myfile << std::endl;
+    }
+    m_myfile << std::endl;
+
     }
 
     if (!m_robotControl.setReferences(jointPosition,
