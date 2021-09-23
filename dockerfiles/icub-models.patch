@@ -70,7 +70,7 @@ index d1fc50f..6201c13 100644
  maxInt        9999  9999  9999
  maxOutput     9999  9999  9999
 diff --git a/iCub/conf_icub3/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini b/iCub/conf_icub3/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini
-index 4e049cd..c581da1 100644
+index 4e049cd..a9507d1 100644
 --- a/iCub/conf_icub3/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini
 +++ b/iCub/conf_icub3/gazebo_icub_left_arm_no_hand_for_no_hand_model.ini
 @@ -38,7 +38,7 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0  100.0
@@ -82,8 +82,16 @@ index 4e049cd..c581da1 100644
  kd            0.174 0.174 0.174 0.174 0.174 0.174 0.0
  ki            0.174 0.174 0.174 0.174 0.174 0.174 0.0
  maxInt        9999  9999  9999  9999  9999  9999  9999
+@@ -49,6 +49,7 @@ stictionUp    0.0   0.0   0.0   0.0   0.0   0.0   0.0
+ stictionDwn   0.0   0.0   0.0   0.0   0.0   0.0   0.0
+ 
+ [VELOCITY_CONTROL]
++velocityControlImplementationType integrator_and_position_pid
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+ kp            8.726 8.726 8.726 5.236 5.236 5.236 5.236
 diff --git a/iCub/conf_icub3/gazebo_icub_left_leg.ini b/iCub/conf_icub3/gazebo_icub_left_leg.ini
-index 0a149e9..b86c4df 100644
+index 0a149e9..8a6053f 100644
 --- a/iCub/conf_icub3/gazebo_icub_left_leg.ini
 +++ b/iCub/conf_icub3/gazebo_icub_left_leg.ini
 @@ -37,7 +37,7 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0
@@ -95,8 +103,16 @@ index 0a149e9..b86c4df 100644
  kd            0.35   0.35   0.35   0.35   0.35   0.35
  ki            0.35   0.35   0.35   0.35   0.35   0.35
  maxInt        9999   9999   9999   9999   9999   9999
+@@ -48,6 +48,7 @@ stictionUp    0.0    0.0    0.0    0.0    0.0    0.0
+ stictionDwn   0.0    0.0    0.0    0.0    0.0    0.0
+ 
+ [VELOCITY_CONTROL]
++velocityControlImplementationType integrator_and_position_pid
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+ kp            8.726 8.726 8.726 8.726 8.726 8.726
 diff --git a/iCub/conf_icub3/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini b/iCub/conf_icub3/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini
-index 37187a5..76faefc 100644
+index 37187a5..f14cb5a 100644
 --- a/iCub/conf_icub3/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini
 +++ b/iCub/conf_icub3/gazebo_icub_right_arm_no_hand_for_no_hand_model.ini
 @@ -38,7 +38,7 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0  100.0
@@ -108,8 +124,16 @@ index 37187a5..76faefc 100644
  kd            0.174 0.174 0.174 0.174 0.174 0.174 0.0
  ki            0.174 0.174 0.174 0.174 0.174 0.174 0.0
  maxInt        9999  9999  9999  9999  9999  9999  9999
+@@ -49,6 +49,7 @@ stictionUp    0.0   0.0   0.0   0.0   0.0   0.0   0.0
+ stictionDwn   0.0   0.0   0.0   0.0   0.0   0.0   0.0
+ 
+ [VELOCITY_CONTROL]
++velocityControlImplementationType integrator_and_position_pid
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+ kp            8.726 8.726 8.726 5.236 5.236 5.236 5.236
 diff --git a/iCub/conf_icub3/gazebo_icub_right_leg.ini b/iCub/conf_icub3/gazebo_icub_right_leg.ini
-index be92625..1b23992 100644
+index be92625..9f5fa3a 100644
 --- a/iCub/conf_icub3/gazebo_icub_right_leg.ini
 +++ b/iCub/conf_icub3/gazebo_icub_right_leg.ini
 @@ -37,7 +37,7 @@ max_damping   100.0  100.0  100.0  100.0  100.0  100.0
@@ -121,8 +145,16 @@ index be92625..1b23992 100644
  kd            0.35   0.35   0.35   0.35   0.35   0.35
  ki            0.35   0.35   0.35   0.35   0.35   0.35
  maxInt        9999   9999   9999   9999   9999   9999
+@@ -48,6 +48,7 @@ stictionUp    0.0    0.0    0.0    0.0    0.0    0.0
+ stictionDwn   0.0    0.0    0.0    0.0    0.0    0.0
+ 
+ [VELOCITY_CONTROL]
++velocityControlImplementationType integrator_and_position_pid
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+ kp            8.726 8.726 8.726 8.726 8.726 8.726
 diff --git a/iCub/conf_icub3/gazebo_icub_torso.ini b/iCub/conf_icub3/gazebo_icub_torso.ini
-index cab5cf3..fdbce81 100644
+index cab5cf3..6a7d391 100644
 --- a/iCub/conf_icub3/gazebo_icub_torso.ini
 +++ b/iCub/conf_icub3/gazebo_icub_torso.ini
 @@ -37,7 +37,7 @@ max_damping   100.0  100.0  100.0
@@ -134,3 +166,11 @@ index cab5cf3..fdbce81 100644
  kd            0.35  0.35  0.35
  ki            0.35  0.35  0.35
  maxInt        9999  9999  9999
+@@ -48,6 +48,7 @@ stictionUp    0.0   0.0   0.0
+ stictionDwn   0.0   0.0   0.0
+ 
+ [VELOCITY_CONTROL]
++velocityControlImplementationType integrator_and_position_pid
+ controlUnits  metric_units
+ controlLaw    joint_pid_gazebo_v1
+ kp            8.726 8.726 8.726
