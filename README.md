@@ -2,53 +2,26 @@
  Centroidal MPC for walking
 </h1>
 
+## Short description of the repository
+This repository contains the code that implements a non-linear online MPC for bipedal locomotion that considers the Centroidal dynamics of the floating base system.
 
-### Installation
+## Reproducing the experiments
 
-The software stored in this repository depends on an experimental version of the [`bipedal-locomotion-framework`](https://github.com/ami-iit/bipedal-locomotion-framework/tree/feature/CentroidalMPC)  library.
+We support running the experiments via the provided Docker image.
 
-You can easily all the dependencies of `bipedal-locomotion-framework` with [`conda`](https://docs.conda.io) using the following command
+1. Pull the docker image:
+    ```console
+    docker pull ghcr.io/ami-iit/centroidal-mpc-walking-docker:latest
+    ```
+2. Launch the container:
+    ```console
+    docker run -it --rm  --device=/dev/dri:/dev/dri --user user --env="DISPLAY=$DISPLAY"  --net=host  ghcr.io/ami-iit/centroidal-mpc-walking-docker:latest
+    ```
+3. Wait for `gazebo` running and then start the experiment
 
-```
-conda install cmake compilers make ninja pkg-config
-conda install -c conda-forge -c robotology idyntree yarp libmatio matio-cpp lie-group-controllers eigen qhull "casadi>=3.5.5" cppad spdlog catch2 nlohmann_json manif
-```
 
-Once the dependencies has been installed you can compile `bipedal-locomotion-framework` as follow
-
-```
-git clone https://github.com/ami-iit/bipedal-locomotion-framework.git
-cd bipedal-locomotion-framework
-git checkout e00ccfde545a0d94d986d0159066b98d5820dbe4
-mkdir build
-cd build
-cmake -DCMAKE_PREFIX_PATH=<path/where/you/want/to/install/blf>
-make install
-```
-
-You can finally clone this repository and build it using the usual cmake machinery
-
-### Running
-
-You can run a simulation scenario in gazebo. Please install `gazebo` and the associated plugins and the robot models with
-
-```
-conda install -c conda-forge -c robotology gazebo-yarp-plugins icub-models
-```
-
-Then you should set the `YARP_ROBOT_NAME` environment variable to `iCubGazeboV3`
-
-You can spawn the world with
-
-```
-gazebo -slibgazebo_yarp_clock.so centroidal_mpc_icub3/world
-```
-
-Please run the simulation with the following command
-
-```
-YARP_CLOCK=/clock cmw-walking
-```
+⚠️ **Known issue**: We noticed that the installed version of ipopt and mumps are not optimized, For this reason, the Centroidal MPC requires more than 3 seconds to compute the solution. Consequentially, the `gazebo` world is slow down by a factor of 100.
+If you want to speed up the simulation you may install `ipopt 3.13.4` with `CoinBrew` as explained [here](https://gist.github.com/GiulioRomualdi/22fddb949e7b09bb53ca2ff72cbf8cb6)
 
 ### Maintainer
 
