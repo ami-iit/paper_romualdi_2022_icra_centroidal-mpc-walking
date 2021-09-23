@@ -20,7 +20,7 @@ RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 
 # Install essentials
-RUN apt install -y -qq build-essential ca-certificates cmake cmake-curses-gui curl emacs-nox git glmark2 gnupg2 htop iputils-ping lsb-release mesa-utils nano psmisc sudo unzip vim wget libqt5opengl5-dev && \
+RUN apt install -y -qq build-essential ca-certificates cmake cmake-curses-gui curl emacs-nox git glmark2 gnupg2 htop iputils-ping lsb-release mesa-utils nano psmisc sudo unzip vim wget libqt5opengl5-dev tmuxinator && \
    rm -rf /var/lib/apt/lists/*
 
 
@@ -79,7 +79,15 @@ RUN echo 'export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH:+${ROS_PACKAGE_PATHW}:}/opt
 RUN echo 'export AMENT_PREFIX_PATH=${AMENT_PREFIX_PATH:+${AMENT_PREFIX_PATH}:}/opt/conda/share' >> ~/.bashrc
 RUN echo 'export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH:+${GAZEBO_MODEL_PATH}:}/opt/conda/share/gazebo/models:/opt/conda/share/iCub/robots:/opt/conda/share' >> ~/.bashrc
 RUN echo 'export YARP_ROBOT_NAME=iCubGazeboV3' >> ~/.bashrc
+RUN echo 'export SHELL=iCubGazeboV3' >> ~/.bashrc
+RUN echo 'export SHELL=/bin/bash' >> ~/.bashrc
+RUN echo 'export EDITOR=nano' >> ~/.bashrc
+
+RUN mkdir -p ~/.config/tmuxinator
+COPY centroidal-mpc.yml .
+RUN cp centroidal-mpc.yml  ~/.config/tmuxinator/
 
 # Launch bash from /home/user
 WORKDIR /home/user
+
 CMD ["bash"]
