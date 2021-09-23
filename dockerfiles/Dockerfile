@@ -90,4 +90,4 @@ RUN cp centroidal-mpc.yml  ~/.config/tmuxinator/
 # Launch bash from /home/user
 WORKDIR /home/user
 
-CMD ["bash"]
+CMD ["tmuxinator", "start", "centroidal-mpc"]
