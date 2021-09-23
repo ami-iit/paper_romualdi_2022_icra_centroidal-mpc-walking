@@ -78,6 +78,7 @@ RUN echo 'export GAZEBO_RESOURCE_PATH=${GAZEBO_RESOURCE_PATH:+${GAZEBO_RESOURCE_
 RUN echo 'export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH:+${ROS_PACKAGE_PATHW}:}/opt/conda/share:/opt/conda/share/iCub/robots' >> ~/.bashrc
 RUN echo 'export AMENT_PREFIX_PATH=${AMENT_PREFIX_PATH:+${AMENT_PREFIX_PATH}:}/opt/conda/share' >> ~/.bashrc
 RUN echo 'export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH:+${GAZEBO_MODEL_PATH}:}/opt/conda/share/gazebo/models:/opt/conda/share/iCub/robots:/opt/conda/share' >> ~/.bashrc
+RUN echo 'export YARP_ROBOT_NAME=iCubGazeboV3' >> ~/.bashrc
 
 # Launch bash from /home/user
 WORKDIR /home/user
