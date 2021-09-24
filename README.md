@@ -15,13 +15,19 @@ We support running the experiments via the provided Docker image.
     ```
 2. Launch the container:
     ```console
-    docker run -it --rm  --device=/dev/dri:/dev/dri --user user --env="DISPLAY=$DISPLAY"  --net=host  ghcr.io/ami-iit/centroidal-mpc-walking-docker:latest
+    xhost +
+    docker run -it --rm  \
+               --device=/dev/dri:/dev/dri \
+               --user user \
+               --env="DISPLAY=$DISPLAY"  \
+               --net=host \
+               ghcr.io/ami-iit/centroidal-mpc-walking-docker:latest
     ```
 3. Wait for `gazebo` running and then start the experiment
 
 
-⚠️ **Known issue**: We noticed that the installed version of ipopt and mumps are not optimized, For this reason, the Centroidal MPC requires more than 3 seconds to compute the solution. Consequentially, the `gazebo` world is slow down by a factor of 100.
-If you want to speed up the simulation you may install `ipopt 3.13.4` with `CoinBrew` as explained [here](https://gist.github.com/GiulioRomualdi/22fddb949e7b09bb53ca2ff72cbf8cb6)
+⚠️ **Known issue**: The `gazebo` real-time factor is scaled of factor 10. This is necessary since the linear solver used by `IPOPT` in the docker image is `mumps`. Unfortunately, other linear solvers (e.g. `ma27`) can be downloaded but not redistributed. Please check [here](https://www.hsl.rl.ac.uk/ipopt/).
+If you want to speed up the simulation you may install `IPOPT 3.13.4` with `CoinBrew` +  `HSL solver` as explained [here](https://gist.github.com/GiulioRomualdi/22fddb949e7b09bb53ca2ff72cbf8cb6).
 
 ### Maintainer
 
