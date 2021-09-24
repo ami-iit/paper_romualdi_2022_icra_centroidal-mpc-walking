@@ -2,6 +2,11 @@
  Centroidal MPC for walking
 </h1>
 
+
+https://user-images.githubusercontent.com/16744101/134700608-33d8fcb2-931d-4ffd-8355-59650386dd66.mp4
+
+
+
 ## Short description of the repository
 This repository contains the code that implements a non-linear online MPC for bipedal locomotion that considers the Centroidal dynamics of the floating base system.
 
