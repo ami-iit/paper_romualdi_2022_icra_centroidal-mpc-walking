@@ -11,7 +11,7 @@ G. Romualdi, S. Dafarra, G. L'Erario, I. Sorrentino, S. Traversaro and D. Pucci 
 <p align="center">
 
 
-https://user-images.githubusercontent.com/16744101/134700608-33d8fcb2-931d-4ffd-8355-59650386dd66.mp4
+https://user-images.githubusercontent.com/16744101/163016195-2151ae19-6a9c-4fb5-9a57-92ee2cd8c899.mp4
 
 
 <div align="center">
@@ -20,13 +20,9 @@ https://user-images.githubusercontent.com/16744101/134700608-33d8fcb2-931d-4ffd-
  
 <div align="center">
   <a href="#reproducing-the-experiments"><b>Installation</b></a> |
-  <a href="https://arxiv.org/abs/2203.04489"><b>arXiv</b></a> |
+  <a href="https://arxiv.org/abs/2203.04489"><b>arXiv</b></a>
 </div>
 
-
-
-## Short description of the repository
-This repository contains the code that implements a non-linear online MPC for bipedal locomotion that considers the Centroidal dynamics of the floating base system.
 
 ## Reproducing the experiments
 
@@ -48,11 +44,12 @@ We support running the experiments via the provided Docker image.
     ```
 3. Wait for `gazebo` running and then start the experiment
 
+🎥 Please check [this video](https://user-images.githubusercontent.com/16744101/134700608-33d8fcb2-931d-4ffd-8355-59650386dd66.mp4) if you want to watch a simulation experiment.
 
 ⚠️ **Known issue**: The `gazebo` real-time factor is scaled of factor 10. This is necessary since the linear solver used by `IPOPT` in the docker image is `mumps`. Unfortunately, other linear solvers (e.g. `ma27`) can be downloaded but not redistributed. Please check [here](https://www.hsl.rl.ac.uk/ipopt/).
 If you want to speed up the simulation you may install `IPOPT 3.13.4` with `CoinBrew` +  `HSL solver` as explained [here](https://gist.github.com/GiulioRomualdi/22fddb949e7b09bb53ca2ff72cbf8cb6).
 
-### Citing this work
+## Citing this work
 
 If you find the work useful, please consider citing:
 
@@ -71,7 +68,7 @@ If you find the work useful, please consider citing:
 
 
 
-### Maintainer
+## Maintainer
 
 This repository is maintained by:
 
