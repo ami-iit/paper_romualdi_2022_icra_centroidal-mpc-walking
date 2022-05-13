@@ -20,7 +20,8 @@ https://user-images.githubusercontent.com/16744101/163016195-2151ae19-6a9c-4fb5-
  
 <div align="center">
   <a href="#reproducing-the-experiments"><b>Installation</b></a> |
-  <a href="https://arxiv.org/abs/2203.04489"><b>arXiv</b></a>
+  <a href="https://arxiv.org/abs/2203.04489"><b>arXiv</b></a> |
+  <a href="https://www.youtube.com/watch?v=u7vCgE2w_vY9"><b>YouTube</b></a>
 </div>
 
 
