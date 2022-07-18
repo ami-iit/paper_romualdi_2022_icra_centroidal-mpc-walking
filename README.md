@@ -20,7 +20,8 @@ https://user-images.githubusercontent.com/16744101/163016195-2151ae19-6a9c-4fb5-
  
 <div align="center">
   <a href="#reproducing-the-experiments"><b>Installation</b></a> |
-  <a href="https://arxiv.org/abs/2203.04489"><b>arXiv</b></a> |
+  <a href="https://arxiv.org/abs/2203.04489"><b>arXiv</b></a> | 
+  <a href="https://ieeexplore.ieee.org/document/9811670"><b>Paper</b></a> |
   <a href="https://www.youtube.com/watch?v=u7vCgE2w_vY9"><b>YouTube</b></a>
 </div>
 
@@ -55,16 +56,15 @@ If you want to speed up the simulation you may install `IPOPT 3.13.4` with `Coin
 If you find the work useful, please consider citing:
 
 ```bibtex
-@article{https://doi.org/10.48550/arxiv.2203.04489,
-  doi = {10.48550/ARXIV.2203.04489},
-  url = {https://arxiv.org/abs/2203.04489},
-  author = {Romualdi, Giulio and Dafarra, Stefano and L'Erario, Giuseppe and Sorrentino, Ines and Traversaro, Silvio and Pucci, Daniele},
-  keywords = {Robotics (cs.RO), FOS: Computer and information sciences, FOS: Computer and information sciences},
-  title = {Online Non-linear Centroidal MPC for Humanoid Robot Locomotion with Step Adjustment},
-  publisher = {arXiv},
-  year = {2022},
-  copyright = {arXiv.org perpetual, non-exclusive license}
-}
+@INPROCEEDINGS{9811670,
+   author={Romualdi, Giulio and Dafarra, Stefano and L'Erario, Giuseppe and Sorrentino, Ines and Traversaro, Silvio and Pucci, Daniele},
+   booktitle={2022 International Conference on Robotics and Automation (ICRA)},
+   title={Online Non-linear Centroidal MPC for Humanoid Robot Locomotion with Step Adjustment},
+   year={2022},
+   volume={},
+   number={},
+   pages={10412-10419},
+   doi={10.1109/ICRA46639.2022.9811670}}
 ```
 
 
